@@ -9,37 +9,50 @@
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Button x:Name="blueLedButton" Grid.Row="0" Grid.Column="2" Click="BlueLedButton_Click">
+        <Button x:Name="blueLedButton" Grid.Row="0" Grid.Column="1" Click="BlueLedButton_Click">
             <StackPanel>
                 <Image x:Name="PicBlueLed" Source="Pictures/Led_BlueNC.png"  Margin="5" Height="190"/>
             </StackPanel>
         </Button>
         <!--  -->
-        <Button x:Name="redLedButton" Grid.Row="1" Grid.Column="2" Click="RedLedButton_Click">
+        <Button x:Name="redLedButton" Grid.Row="1" Grid.Column="1" Click="RedLedButton_Click">
             <StackPanel>
                 <Image x:Name="PicRedLed" Source="Pictures/Led_RedNC.png" Margin="5" Height="190"/>
             </StackPanel>
         </Button>
 
-        <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="2">
-            <Label>Sekvenssit</Label>
-            <ListBox x:Name="sequencesListBox"></ListBox>
+        <StackPanel Margin="5" Grid.RowSpan="2">
+
+            <StackPanel x:Name="SequencesStackPanel" Orientation="Horizontal" Margin="5, 0" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                <Label Margin="5, 0" VerticalAlignment="Center">Valitse sekvenssi:</Label>
+                <ComboBox x:Name="SequencesComboBox" MinWidth="100" Margin="5" SelectionChanged="SequencesComboBox_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <TextBox x:Name="SequenceNameTextBox" VerticalAlignment="Center" Margin="5" MinWidth="100"></TextBox>
+                <Button Margin="5" Padding="5">Muokkaa</Button>
+                <Button Margin="5" Padding="5">Lisää uusi</Button>
+                <Button Margin="5" Padding="5">Poista</Button>
+            </StackPanel>
+
+            <StackPanel x:Name="SequenceDetailStackPanel" Margin="5">
+                <Label HorizontalAlignment="Center">Sekvenssin tiedot</Label>
+                <ListBox x:Name="SequenceDetailListBox" HorizontalContentAlignment="Stretch" ItemsSource="{Binding detailsList}">
+                </ListBox>                
+            </StackPanel>
+            
         </StackPanel>
-
-        <StackPanel Grid.Row="0" Grid.Column="1">
-            <Label>Sekvenssin tiedot</Label>
-            <ListBox x:Name="sequenceDetailListBox"></ListBox>
-
-        </StackPanel>
-
-        <Button x:Name="startButton" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1" Margin="15" Padding="5">Käynnistä</Button>
 
     </Grid>
 
