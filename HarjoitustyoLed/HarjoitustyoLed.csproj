@@ -164,7 +164,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Details.cs" />
+    <Compile Include="PlayList.cs" />
     <Compile Include="Migrations\20181214202144_InitialCreate.cs" />
     <Compile Include="Migrations\20181214202144_InitialCreate.designer.cs">
       <DependentUpon>20181214202144_InitialCreate.cs</DependentUpon>

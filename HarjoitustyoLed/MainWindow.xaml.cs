@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace HarjoitustyoLed
         private LedControl ledControl;
         private Led redLed;
         private Led blueLed;
+        private PlayList playList;
 
         public MainWindow()
         {
@@ -37,6 +39,7 @@ namespace HarjoitustyoLed
             redLed = new Led(26, "punainen");
             blueLed = new Led(19, "sininen");
             ledControl = new LedControl();
+            playList = new PlayList();
             InitializeLedControl();
             LoadSequences();
         }
@@ -86,7 +89,6 @@ namespace HarjoitustyoLed
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -225,8 +227,9 @@ namespace HarjoitustyoLed
                 {
                     //MessageBox.Show($"Valitsit sekvenssin {selectedSequence.Name}, jonka id on {selectedSequence.Id}");
                     SequenceNameTextBox.Text = selectedSequence.Name;
-                    var secuenceId = selectedSequence.Id;
+                    var sequenceId = selectedSequence.Id;
 
+                    /*
                     var ledSequenceList = loadSequences.LedSequences
                         .Include(TimeRow => TimeRow.TimeRows)
                         .Where(c => c.Id.Equals(secuenceId))
@@ -243,15 +246,18 @@ namespace HarjoitustyoLed
                         .Include(LedRow => LedRow.TimeRow)
                         .Include(LedSequence => LedSequence.TimeRow)
                         .ToList();
+                        */
+
+
 
                     var uusi2 = loadSequences.TimeRows
                         .Include(c => c.LedRows)
                         .ToArray();
 
-                  
-                        
-                    
 
+
+
+                    /*
                     var uusi =
                         from timer in loadSequences.TimeRows
                         join leds in loadSequences.LedRows on timer.Id equals leds.TimeRow.Id
@@ -263,7 +269,9 @@ namespace HarjoitustyoLed
                     {
                         var testi = item.TimeRows;
                     }
+                    */
 
+                    /*
                     var query = (
                         from timer in loadSequences.TimeRows
                         join leds in loadSequences.LedRows on timer.Id equals leds.TimeRow.Id
@@ -279,12 +287,7 @@ namespace HarjoitustyoLed
                             ledPinId = leds.PinId,
                             ledStatus = leds.Status
                         }).ToList();
-
-                    //ShowSequenceDetails(ledSequenceArray);
-                    //ShowSequenceDetails(ledSequenceList);
-                    //ShowSequenceDetails();
-
-                    //SequenceDetailListBox.ItemsSource = query;
+                        */
 
                     TimeRowDetails(uusi2);
 
@@ -297,11 +300,17 @@ namespace HarjoitustyoLed
             }
         }
 
+        private void loadAll()
+        {
+
+        }
+
         private void TimeRowDetails(TimeRow[] leds)
         {
             List<string> detailsList = new List<string>();
             string detailsString = "";
             string ledstring = "";
+
 
             foreach (var time in leds)
             {
@@ -321,52 +330,55 @@ namespace HarjoitustyoLed
                 detailsList.Add(detailsString);
             }
 
+
             SequenceDetailListBox.ItemsSource = detailsList;
         }
-    
 
- 
-        private void ShowSequenceDetails(HarjoitustyoLed.LedSequence[] leds)
+        private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            List<string> detailsList = new List<string>();
-            string detailsString = "";
-            foreach (var time in leds[0].TimeRows)
+            // Play-nappia painettu, toistetaan sekvenssi
+            var selectedSequence = this.SequencesComboBox.SelectedItem as LedSequence;
+            if (selectedSequence != null)
             {
-                detailsString = time.Time + " ms\t";
-
-                string test = time.LedRows[0].Id.ToString();
-
-
-                detailsList.Add(detailsString);
-            }
-            SequenceDetailListBox.ItemsSource = detailsList;
-        }
-        private void ShowSequenceDetails(List<HarjoitustyoLed.LedSequence> leds)
-        {
-            List<string> detailsList = new List<string>();
-            string detailsString = "";
-            string ledstring = "";
-
-            foreach (var times in leds[0].TimeRows)
-            {
-                detailsString = "";
-                ledstring = "";
-                
-                detailsString += times.Time + "ms";
-
-                foreach (var ledstatus in times.LedRows)
+                try
                 {
-                    var pin = ledstatus.PinId;
-                    var status = ledstatus.Status;
-                    ledstring += $" pinId: {pin}, status: {status}";
+                    using (var loadSequences = new SequenceContext())
+                    {
+                        PlayList uusiLista = new PlayList();
+                        int time = 0;
+                        int pinId1 = 0;
+                        int status1 = 0;
+                        int pinId2 = 0;
+                        int status2 = 0;
+
+                        SequenceNameTextBox.Text = selectedSequence.Name;
+                        var sequenceId = selectedSequence.Id;
+                        var query = loadSequences.TimeRows
+                            .Include(c => c.LedRows)
+                            .ToArray();
+
+                        LedPlay ledPlay = new LedPlay();
+
+                        foreach (var sequence in query)
+                        {
+                            ledPlay.Time = sequence.Time;
+                            ledPlay.PinId1 = sequence.LedRows[0].PinId;
+                            ledPlay.Status1 = sequence.LedRows[0].Status;
+                            ledPlay.PinId2 = sequence.LedRows[1].PinId;
+                            ledPlay.Status2 = sequence.LedRows[0].Status;
+                            //LedPlay ledPlay = new LedPlay(time, pinId1, status1, pinId2, status2);
+                            //uusiLista.LedPlays.Add(new LedPlay(time, pinId1, status1, pinId2, status2));
+                            //uusiLista.LedPlays.Add(ledPlay);
+                        }
+                        int testi = 0;
+                    }
                 }
+                catch (Exception)
+                {
 
-                //detailsString += ledstring;
-
-                detailsList.Add(detailsString);
+                    throw;
+                }
             }
-
-            SequenceDetailListBox.ItemsSource = detailsList;
         }
     }
 }
