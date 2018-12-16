@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Timers;
+using System.Threading;
 
 namespace HarjoitustyoLed
 {
@@ -31,7 +33,7 @@ namespace HarjoitustyoLed
         private LedControl ledControl;
         private Led redLed;
         private Led blueLed;
-        private PlayList playList;
+        private bool playing;
 
         public MainWindow()
         {
@@ -39,9 +41,9 @@ namespace HarjoitustyoLed
             redLed = new Led(26, "punainen");
             blueLed = new Led(19, "sininen");
             ledControl = new LedControl();
-            playList = new PlayList();
             InitializeLedControl();
             LoadSequences();
+
         }
 
         private async void InitializeLedControl()
@@ -96,16 +98,16 @@ namespace HarjoitustyoLed
         private async void BlueLedButton_Click(object sender, RoutedEventArgs e)
         {
             await ledControl.swapStatus(blueLed);
-            setBluePic();
+            await setBluePic();
         }
 
         private async void RedLedButton_Click(object sender, RoutedEventArgs e)
         {
             await ledControl.swapStatus(redLed);
-            setRedPic();
+            await setRedPic();
         }
 
-        private async void setBluePic()
+        private async Task setBluePic()
         {
             if (await ledControl.getStatus(blueLed) == 1)
             {
@@ -121,7 +123,7 @@ namespace HarjoitustyoLed
             }
         }
 
-        private async void setRedPic()
+        private async Task setRedPic()
         {
             if (await ledControl.getStatus(redLed) == 1)
             {
@@ -300,10 +302,6 @@ namespace HarjoitustyoLed
             }
         }
 
-        private void loadAll()
-        {
-
-        }
 
         private void TimeRowDetails(TimeRow[] leds)
         {
@@ -336,15 +334,17 @@ namespace HarjoitustyoLed
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
+
+
             // Play-nappia painettu, toistetaan sekvenssi
             var selectedSequence = this.SequencesComboBox.SelectedItem as LedSequence;
             if (selectedSequence != null)
             {
+                PlayList uusiLista = new PlayList();
                 try
                 {
                     using (var loadSequences = new SequenceContext())
                     {
-                        PlayList uusiLista = new PlayList();
                         int time = 0;
                         int pinId1 = 0;
                         int status1 = 0;
@@ -357,20 +357,19 @@ namespace HarjoitustyoLed
                             .Include(c => c.LedRows)
                             .ToArray();
 
-                        LedPlay ledPlay = new LedPlay();
+                        PlayListRow playListRow = new PlayListRow();
 
                         foreach (var sequence in query)
                         {
-                            ledPlay.Time = sequence.Time;
-                            ledPlay.PinId1 = sequence.LedRows[0].PinId;
-                            ledPlay.Status1 = sequence.LedRows[0].Status;
-                            ledPlay.PinId2 = sequence.LedRows[1].PinId;
-                            ledPlay.Status2 = sequence.LedRows[0].Status;
-                            //LedPlay ledPlay = new LedPlay(time, pinId1, status1, pinId2, status2);
-                            //uusiLista.LedPlays.Add(new LedPlay(time, pinId1, status1, pinId2, status2));
-                            //uusiLista.LedPlays.Add(ledPlay);
+                            time = sequence.Time;
+                            pinId1 = sequence.LedRows[0].PinId;
+                            status1 = sequence.LedRows[0].Status;
+                            pinId2 = sequence.LedRows[1].PinId;
+                            status2 = sequence.LedRows[1].Status;
+
+                            PlayListRow listanrivi = new PlayListRow(time, pinId1, status1, pinId2, status2);
+                            uusiLista.addRow(listanrivi);
                         }
-                        int testi = 0;
                     }
                 }
                 catch (Exception)
@@ -378,7 +377,39 @@ namespace HarjoitustyoLed
 
                     throw;
                 }
+
+                PlaySequence(uusiLista);
             }
+        }
+
+        private async void PlaySequence(PlayList playList)
+        {
+            playing = true;
+            playButton.Visibility = System.Windows.Visibility.Collapsed;
+            stopButton.Visibility = System.Windows.Visibility.Visible;
+
+            while (playing)
+            {
+                foreach (var row in playList.PlayListRows)
+                {
+                    await ledControl.setStatus(redLed, row.Status1);
+                    if (row.Status1 == 0) PicRedLed.Source = ledRed0;
+                    else PicRedLed.Source = ledRed1;
+                    await ledControl.setStatus(blueLed, row.Status2);
+                    if (row.Status2 == 1) PicBlueLed.Source = ledBlue0;
+                    else PicBlueLed.Source = ledBlue1;
+                    Thread.Sleep(row.Time);
+                }
+
+            }
+        }
+
+        private void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+            playing = false;
+            playButton.Visibility = Visibility.Visible;
+            stopButton.Visibility = Visibility.Collapsed;
+
         }
     }
 }

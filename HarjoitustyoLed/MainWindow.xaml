@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HarjoitustyoLed"
         mc:Ignorable="d"
-        Title="Led Control" Height="450" Width="800">
+        Title="Led Control" Height="450" Width="900">
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -40,7 +40,8 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <Button x:Name="playButton" Margin="5" Padding="5" Click="PlayButton_Click">Start</Button>
+                <Button x:Name="playButton" Margin="5" Padding="5" Visibility="Visible" Click="PlayButton_Click">Start</Button>
+                <Button x:Name="stopButton" Margin="5" Padding="5" Visibility="Collapsed" Click="StopButton_Click">Stop</Button>
                 <TextBox x:Name="SequenceNameTextBox" VerticalAlignment="Center" Margin="5" MinWidth="100"></TextBox>
                 <Button Margin="5" Padding="5">Muokkaa</Button>
                 <Button Margin="5" Padding="5">Lisää uusi</Button>
