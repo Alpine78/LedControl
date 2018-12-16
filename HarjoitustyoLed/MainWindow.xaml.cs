@@ -411,5 +411,11 @@ namespace HarjoitustyoLed
             stopButton.Visibility = Visibility.Collapsed;
 
         }
+
+        private void NewSeqcuenceButton_Click(object sender, RoutedEventArgs e)
+        {
+            SequenceWindow window = new SequenceWindow();
+            var result = window.ShowDialog();
+        }
     }
 }

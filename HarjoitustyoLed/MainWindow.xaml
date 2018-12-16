@@ -43,9 +43,9 @@
                 <Button x:Name="playButton" Margin="5" Padding="5" Visibility="Visible" Click="PlayButton_Click">Start</Button>
                 <Button x:Name="stopButton" Margin="5" Padding="5" Visibility="Collapsed" Click="StopButton_Click">Stop</Button>
                 <TextBox x:Name="SequenceNameTextBox" VerticalAlignment="Center" Margin="5" MinWidth="100"></TextBox>
-                <Button Margin="5" Padding="5">Muokkaa</Button>
-                <Button Margin="5" Padding="5">Lisää uusi</Button>
-                <Button Margin="5" Padding="5">Poista</Button>
+                <Button x:Name="editSeqcuenceButton" Margin="5" Padding="5" Visibility="Collapsed">Muokkaa</Button>
+                <Button x:Name="newSeqcuenceButton" Margin="5" Padding="5" Click="NewSeqcuenceButton_Click">Lisää uusi</Button>
+                <Button x:Name="deleteSeqcuenceButton" Margin="5" Padding="5" Visibility="Collapsed">Poista</Button>
             </StackPanel>
 
             <StackPanel x:Name="SequenceDetailStackPanel" Margin="5">

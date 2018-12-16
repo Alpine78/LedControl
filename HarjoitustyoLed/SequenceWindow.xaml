@@ -5,8 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HarjoitustyoLed"
         mc:Ignorable="d"
-        Title="SequenceWindow" Height="450" Width="800">
+        Title="Sekvenssi" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <Label HorizontalAlignment="Center">Sekvenssi</Label>
+
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Label>Sekvenssin nimi</Label>
+                <TextBox x:Name="seqcuenceNameTextBox" MinWidth="200" VerticalAlignment="Center"></TextBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Label>Aika (ms)</Label>
+                <TextBox x:Name="timeTextBox" MinWidth="200" PreviewTextInput="NumberValidationTextBox" VerticalAlignment="Center"></TextBox>
+                <Label>Punaisen ledin tila</Label>
+                <RadioButton Content="0" GroupName="redStatus" IsChecked="True" VerticalAlignment="Center" Margin="10,0"/>
+                <RadioButton Content="1" GroupName="redStatus"  VerticalAlignment="Center" Margin="10, 0"/>
+                <Label>Sinisen ledin tila</Label>
+                <RadioButton Content="0" GroupName="blueStatus" IsChecked="True" VerticalAlignment="Center" Margin="10, 0"/>
+                <RadioButton Content="1" GroupName="blueStatus" VerticalAlignment="Center" Margin="10, 0"/>
+                <Button x:Name="addSequenceRowButton" Margin="5,0" Padding="5" Click="AddSequenceRowButton_Click">Lisää rivi</Button>
+            </StackPanel>
+
+            <ListBox x:Name="SequenceEditListBox">
+
+            </ListBox>
+        </StackPanel>
         
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+            <Button x:Name="SaveButton" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Padding="5" Click="SaveButton_Click">Tallenna</Button>
+            <Button x:Name="CancelButton" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Padding="5" Click="CancelButton_Click">Peruuta</Button>
+        </StackPanel>
     </Grid>
 </Window>
