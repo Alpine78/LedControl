@@ -229,7 +229,7 @@ namespace HarjoitustyoLed
                 {
                     //MessageBox.Show($"Valitsit sekvenssin {selectedSequence.Name}, jonka id on {selectedSequence.Id}");
                     SequenceNameTextBox.Text = selectedSequence.Name;
-                    var sequenceId = selectedSequence.Id;
+                    int sequenceId = selectedSequence.Id;
 
                     /*
                     var ledSequenceList = loadSequences.LedSequences
@@ -256,7 +256,23 @@ namespace HarjoitustyoLed
                         .Include(c => c.LedRows)
                         .ToArray();
 
+                    //.Where(d => d.LedSequence.Id.Equals(sequenceId))
 
+
+                    var query = (
+                       from timerows in loadSequences.TimeRows
+                       join ledrows in loadSequences.LedRows on timerows.Id equals ledrows.TimeRow.Id
+                       where timerows.LedSequence.Id == sequenceId
+                       select new { TimeRow = timerows, LedRow = ledrows }).ToList();
+
+                    /*
+                    var query = (                      
+                       from sequencerows in loadSequences.LedSequences
+                       join timerows in loadSequences.TimeRows on sequencerows.Id equals timerows.LedSequence.Id
+                       join ledrows in loadSequences.LedRows on timerows.Id equals ledrows.TimeRow.Id
+                       where sequencerows.Id == sequenceId
+                       select new { LedSequence = sequencerows, TimeRow = timerows, LedRow = ledrows }).ToList();
+                       */
 
 
                     /*
@@ -291,7 +307,59 @@ namespace HarjoitustyoLed
                         }).ToList();
                         */
 
-                    TimeRowDetails(uusi2);
+                    var joinquery = (
+                        from timer in loadSequences.TimeRows
+                        join leds in loadSequences.LedRows on timer.Id equals leds.TimeRow.Id
+                        join sekvenssi in loadSequences.LedSequences on timer.LedSequence.Id equals sekvenssi.Id
+                        where sekvenssi.Id.Equals(sequenceId)
+                        select new
+                        {
+                            sequencedId = timer.LedSequence.Id,
+                            sequenceName = timer.LedSequence.Name,
+                            timeRowId = timer.Id,
+                            time = timer.Time,
+                            ledRowId = leds.Id,
+                            ledPinId = leds.PinId,
+                            ledStatus = leds.Status
+                        }).ToList();
+
+                    var joinqueryArray = (
+                        from timer in loadSequences.TimeRows
+                        join leds in loadSequences.LedRows on timer.Id equals leds.TimeRow.Id
+                        join sekvenssi in loadSequences.LedSequences on timer.LedSequence.Id equals sekvenssi.Id
+                        where sekvenssi.Id.Equals(sequenceId)
+                        select new
+                        {
+                            sequencedId = timer.LedSequence.Id,
+                            sequenceName = timer.LedSequence.Name,
+                            timeRowId = timer.Id,
+                            time = timer.Time,
+                            ledRowId = leds.Id,
+                            ledPinId = leds.PinId,
+                            ledStatus = leds.Status
+                        }).ToArray();
+
+                    // TimeRowDetails(uusi2);
+                    // Tämä on melkein ok, älä poista. Pitää saada vain yhden id:n tiedot 
+
+                    //TimeRowDetailsFromQyeryArray(joinqueryArray);
+                    //TimeRowDetailsFromQyery(joinquery);
+
+                    // Tekisin tämän kasauksen omassa funktiossa, mutta en osaa välittää tätä tyyppiä ulos.
+                    List<string> detailsList = new List<string>();
+                    string detailsString = "";
+                    foreach (var time in joinquery)
+                    {
+                        detailsString = "";
+                        detailsString = "AikaId " + time.timeRowId + "\t";
+                        detailsString += "Aika " + time.time + " ms\t";
+                        detailsString += "pidId " + time.ledPinId + "\t";
+                        detailsString += "status " + time.ledStatus + "\t";
+                        detailsList.Add(detailsString);
+                    }
+
+                    SequenceDetailListBox.ItemsSource = detailsList;
+                    SequenceDetailListBox.Items.Refresh();
 
                 }
             }
@@ -301,6 +369,8 @@ namespace HarjoitustyoLed
                 //throw;
             }
         }
+
+
 
 
         private void TimeRowDetails(TimeRow[] leds)
@@ -330,14 +400,14 @@ namespace HarjoitustyoLed
 
 
             SequenceDetailListBox.ItemsSource = detailsList;
+            SequenceDetailListBox.Items.Refresh();
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-
-
             // Play-nappia painettu, toistetaan sekvenssi
             var selectedSequence = this.SequencesComboBox.SelectedItem as LedSequence;
+
             if (selectedSequence != null)
             {
                 PlayList uusiLista = new PlayList();
@@ -353,22 +423,49 @@ namespace HarjoitustyoLed
 
                         SequenceNameTextBox.Text = selectedSequence.Name;
                         var sequenceId = selectedSequence.Id;
+
+                        /*
                         var query = loadSequences.TimeRows
                             .Include(c => c.LedRows)
                             .ToArray();
+                        */
+
+                        var query = (
+                            from timer in loadSequences.TimeRows
+                            join leds in loadSequences.LedRows on timer.Id equals leds.TimeRow.Id
+                            join sekvenssi in loadSequences.LedSequences on timer.LedSequence.Id equals sekvenssi.Id
+                            where sekvenssi.Id.Equals(sequenceId)
+                            select new
+                            {
+                                sequencedId = timer.LedSequence.Id,
+                                sequenceName = timer.LedSequence.Name,
+                                timeRowId = timer.Id,
+                                time = timer.Time,
+                                ledRowId = leds.Id,
+                                ledPinId = leds.PinId,
+                                ledStatus = leds.Status
+                            }).ToArray();
 
                         PlayListRow playListRow = new PlayListRow();
 
+                        int count = 0;
+
                         foreach (var sequence in query)
                         {
-                            time = sequence.Time;
-                            pinId1 = sequence.LedRows[0].PinId;
-                            status1 = sequence.LedRows[0].Status;
-                            pinId2 = sequence.LedRows[1].PinId;
-                            status2 = sequence.LedRows[1].Status;
-
-                            PlayListRow listanrivi = new PlayListRow(time, pinId1, status1, pinId2, status2);
-                            uusiLista.addRow(listanrivi);
+                            if (count % 2 == 0)
+                            {
+                                time = sequence.time;
+                                pinId1 = sequence.ledPinId;
+                                status1 = sequence.ledStatus;
+                            }
+                            else
+                            {
+                                pinId2 = sequence.ledPinId;
+                                status2 = sequence.ledStatus;
+                                PlayListRow listanrivi = new PlayListRow(time, pinId1, status1, pinId2, status2);
+                                uusiLista.addRow(listanrivi);
+                            }
+                            count++;
                         }
                     }
                 }
@@ -402,6 +499,10 @@ namespace HarjoitustyoLed
                 }
 
             }
+
+            // Laitetaan kuvat oikein lopputilanteen mukaisesti
+            await setBluePic();
+            await setRedPic();
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
@@ -409,13 +510,14 @@ namespace HarjoitustyoLed
             playing = false;
             playButton.Visibility = Visibility.Visible;
             stopButton.Visibility = Visibility.Collapsed;
-
         }
 
         private void NewSeqcuenceButton_Click(object sender, RoutedEventArgs e)
         {
             SequenceWindow window = new SequenceWindow();
             var result = window.ShowDialog();
+            SequencesComboBox.Items.Refresh();
+            SequenceDetailListBox.Items.Refresh();
         }
     }
 }

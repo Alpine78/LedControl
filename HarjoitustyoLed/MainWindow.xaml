@@ -48,9 +48,9 @@
                 <Button x:Name="deleteSeqcuenceButton" Margin="5" Padding="5" Visibility="Collapsed">Poista</Button>
             </StackPanel>
 
-            <StackPanel x:Name="SequenceDetailStackPanel" Margin="5">
+            <StackPanel x:Name="SequenceDetailStackPanel" Margin="5" >
                 <Label HorizontalAlignment="Center">Sekvenssin tiedot</Label>
-                <ListBox x:Name="SequenceDetailListBox" HorizontalContentAlignment="Stretch" ItemsSource="{Binding detailsList}">
+                <ListBox x:Name="SequenceDetailListBox" HorizontalContentAlignment="Stretch" ItemsSource="{Binding detailsList}" Height="auto">                    
                 </ListBox>                
             </StackPanel>
             
