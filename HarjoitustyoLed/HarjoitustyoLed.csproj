@@ -229,6 +229,10 @@
     <Resource Include="Pictures\Led_Red1.png" />
     <Resource Include="Pictures\Led_RedNC.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Led_BlueLoading.png" />
+    <Resource Include="Pictures\Led_RedLoading.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.linux.1.1.11\build\net35\SQLitePCLRaw.lib.e_sqlite3.linux.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.linux.1.1.11\build\net35\SQLitePCLRaw.lib.e_sqlite3.linux.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

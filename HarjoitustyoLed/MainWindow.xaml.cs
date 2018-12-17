@@ -24,9 +24,11 @@ namespace HarjoitustyoLed
     /// </summary>
     public partial class MainWindow : Window
     {
+        BitmapImage ledRedLoading = new BitmapImage(new Uri(@"Pictures/Led_RedLoading.png", UriKind.Relative));
         BitmapImage ledRed0 = new BitmapImage(new Uri(@"Pictures/Led_Red0.png", UriKind.Relative));
         BitmapImage ledRed1 = new BitmapImage(new Uri(@"Pictures/Led_Red1.png", UriKind.Relative));
         BitmapImage ledRedNC = new BitmapImage(new Uri(@"Pictures/Led_RedNC.png", UriKind.Relative));
+        BitmapImage ledBlueLoading = new BitmapImage(new Uri(@"Pictures/Led_BlueLoading.png", UriKind.Relative));
         BitmapImage ledBlue0 = new BitmapImage(new Uri(@"Pictures/Led_Blue0.png", UriKind.Relative));
         BitmapImage ledBlue1 = new BitmapImage(new Uri(@"Pictures/Led_Blue1.png", UriKind.Relative));
         BitmapImage ledBlueNC = new BitmapImage(new Uri(@"Pictures/Led_BlueNC.png", UriKind.Relative));
@@ -217,6 +219,11 @@ namespace HarjoitustyoLed
                 deleteSequences.LedRows.RemoveRange(deleteSequences.LedRows);
                 deleteSequences.SaveChanges();
             }
+        }
+
+        private void DeleteSeqcuenceButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void SequencesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -519,5 +526,7 @@ namespace HarjoitustyoLed
             SequencesComboBox.Items.Refresh();
             SequenceDetailListBox.Items.Refresh();
         }
+
+
     }
 }

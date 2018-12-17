@@ -17,13 +17,13 @@
         </Grid.RowDefinitions>
         <Button x:Name="blueLedButton" Grid.Row="0" Grid.Column="1" Click="BlueLedButton_Click">
             <StackPanel>
-                <Image x:Name="PicBlueLed" Source="Pictures/Led_BlueNC.png"  Margin="5" Height="190"/>
+                <Image x:Name="PicBlueLed" Source="Pictures/Led_BlueLoading.png"  Margin="5" Height="190"/>
             </StackPanel>
         </Button>
         <!--  -->
         <Button x:Name="redLedButton" Grid.Row="1" Grid.Column="1" Click="RedLedButton_Click">
             <StackPanel>
-                <Image x:Name="PicRedLed" Source="Pictures/Led_RedNC.png" Margin="5" Height="190"/>
+                <Image x:Name="PicRedLed" Source="Pictures/Led_RedLoading.png" Margin="5" Height="190"/>
             </StackPanel>
         </Button>
 
@@ -45,7 +45,7 @@
                 <TextBox x:Name="SequenceNameTextBox" VerticalAlignment="Center" Margin="5" MinWidth="100"></TextBox>
                 <Button x:Name="editSeqcuenceButton" Margin="5" Padding="5" Visibility="Collapsed">Muokkaa</Button>
                 <Button x:Name="newSeqcuenceButton" Margin="5" Padding="5" Click="NewSeqcuenceButton_Click">Lisää uusi</Button>
-                <Button x:Name="deleteSeqcuenceButton" Margin="5" Padding="5" Visibility="Collapsed">Poista</Button>
+                <Button x:Name="deleteSeqcuenceButton" Margin="5" Padding="5" Visibility="Collapsed" Click="DeleteSeqcuenceButton_Click">Poista</Button>
             </StackPanel>
 
             <StackPanel x:Name="SequenceDetailStackPanel" Margin="5" >
