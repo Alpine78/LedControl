@@ -21,7 +21,9 @@ Arviointikriteerit
 
 ## Projekti
 
-Tämä projekti sisältää Windows WPF-sovelluksen. Raspberry Pi:ssä oleva sovellus on melkein sellaisenaan opettajan linkittämästä lähteestä:
+Tämä projekti sisältää Windows WPF-sovelluksen.
+
+Tarvitset lisäksi toisen sovelluksen Raspberry Piihin. Tässä yhteydessä Raspberry Pi:ssä oleva sovellus on melkein sellaisenaan opettajan linkittämästä lähteestä:
 https://jeremylindsayni.wordpress.com/2017/05/01/controlling-gpio-pins-using-a-net-core-2-webapi-on-a-raspberry-pi-using-windows-10-or-ubuntu/
 
 ![alt text](https://ilkkarytkonen.fi//images/koulu/Windows-ja-Linux-ohjelmointi/20181217__DSF6741.jpg)
