@@ -11,18 +11,15 @@ Arviointikriteerit
 
 1: WPF-sovellus. UI suunniteltu, sovellus reagoi käyttäjän toimiin (=koodia kiinnitetty UI-komponenttien tapahtumiin). Ohjedokumentti, jossa on kuvattu koko järjestelmän osat ja toiminnot. Harjotustyö on esitelty opettajalle ja itsearviointi on tehty.
 
- 
-
 2: Raspberryssä ohjelma, joka ohjaa ledejä päälle ja pois sekä antaa ledien tilatiedot
-
- 
 
 3: Ledien tilan kysely ja ohjaus WPF-sovelluksesta (WPF-sovellus ja Raspberryssä oleva sovellus kommunikoivat keskenään)
 
- 
-
 4: Tietokantaan voi tallentaa sekvenssin ledien tilan asettamiseen. Sekvenssin voi ladata tietokannasta ja Raspberry ohjaa ledejä sekvenssin mukaisesti
 
- 
-
 5: Valmis kokonaisuus. Raspberryssä oleva sovellus lähtee automaattisesti päälle Raspberryn käynnistyessä, WPF-sovellus osaa kommunikoida Raspberryn kanssa ilman, että käyttäjän tarvitsee asettaa ip-soitetta. Dokumentaatio Raspberryyn tehdyista toimenpiteistä sekä WPF-sovelluksen ja Raspberryn välisestä kommunikaatiosta.
+
+## Projekti
+
+Tämä projekti sisältää Windows WPF-sovelluksen. Raspberry Pi:ssä oleva sovellus on melkein sellaisenaan opettajan linkittämästä lähteestä:
+https://jeremylindsayni.wordpress.com/2017/05/01/controlling-gpio-pins-using-a-net-core-2-webapi-on-a-raspberry-pi-using-windows-10-or-ubuntu/
