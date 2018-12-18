@@ -34,4 +34,4 @@ https://jeremylindsayni.wordpress.com/2017/05/01/controlling-gpio-pins-using-a-n
 ![alt text](https://ilkkarytkonen.fi//images/koulu/Windows-ja-Linux-ohjelmointi/Sekvenssi.png)
 
 
-YouTube-video: [linkname](https://www.youtube.com/watch?v=vh1WVexAgYE
+YouTube-video: (https://www.youtube.com/watch?v=vh1WVexAgYE)
