@@ -23,3 +23,15 @@ Arviointikriteerit
 
 Tämä projekti sisältää Windows WPF-sovelluksen. Raspberry Pi:ssä oleva sovellus on melkein sellaisenaan opettajan linkittämästä lähteestä:
 https://jeremylindsayni.wordpress.com/2017/05/01/controlling-gpio-pins-using-a-net-core-2-webapi-on-a-raspberry-pi-using-windows-10-or-ubuntu/
+
+![alt text](https://ilkkarytkonen.fi//images/koulu/Windows-ja-Linux-ohjelmointi/20181217__DSF6741.jpg)
+![alt text](https://ilkkarytkonen.fi//images/koulu/Windows-ja-Linux-ohjelmointi/20181217__DSF6742.jpg)
+![alt text](https://ilkkarytkonen.fi//images/koulu/Windows-ja-Linux-ohjelmointi/20181217__DSF6743.jpg)
+![alt text](https://ilkkarytkonen.fi//images/koulu/Windows-ja-Linux-ohjelmointi/20181217__DSF6746.jpg)
+![alt text](https://ilkkarytkonen.fi//images/koulu/Windows-ja-Linux-ohjelmointi/Main.png)
+![alt text](https://ilkkarytkonen.fi//images/koulu/Windows-ja-Linux-ohjelmointi/SQLite_Database.png)
+![alt text](https://ilkkarytkonen.fi//images/koulu/Windows-ja-Linux-ohjelmointi/SQLite_Tables.png)
+![alt text](https://ilkkarytkonen.fi//images/koulu/Windows-ja-Linux-ohjelmointi/Sekvenssi.png)
+
+
+YouTube-video: [linkname](https://www.youtube.com/watch?v=vh1WVexAgYE
